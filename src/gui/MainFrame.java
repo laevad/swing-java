@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,7 @@ public class MainFrame extends JFrame {
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
+    private Controller controller;
 
     public MainFrame(){
         super("Hello World"); // title bar
@@ -43,6 +46,7 @@ public class MainFrame extends JFrame {
         setJMenuBar(createMenuBar());
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
+        controller = new Controller();
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
@@ -63,6 +67,7 @@ public class MainFrame extends JFrame {
                     taxId+" : "+" : "+
                     usCitizen+" : "+
                     gender+"\n");
+            controller.addPerson(e);
         });
 
         // place the object

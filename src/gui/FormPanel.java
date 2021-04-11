@@ -67,7 +67,7 @@ public class FormPanel extends JPanel {
         // combo box (next row)
         DefaultComboBoxModel<Object> empModel = new DefaultComboBoxModel<>();
         empModel.addElement("employed");
-        empModel.addElement("self employed");
+        empModel.addElement("self-employed");
         empModel.addElement("unemployed");
         empCombo.setModel(empModel);
 
