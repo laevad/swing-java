@@ -42,13 +42,16 @@ public class MainFrame extends JFrame {
             int ageCategory = e.getAgeCategory();
             String empCat = e.getEmpCat();
             String taxId = e.getTaxId();
+            String gender = e.getGender();
             boolean usCitizen = e.isUsCitizen();
+
             textPanel.appendText(name+" : "+
                     occupation+" : "+
                     ageCategory+" : "+
                     empCat+" : "+
                     taxId+" : "+" : "+
-                    usCitizen+"\n");
+                    usCitizen+" : "+
+                    gender+"\n");
         });
 
         // place the object
