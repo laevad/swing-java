@@ -9,7 +9,7 @@ public class FormPanel extends JPanel {
     private JTextField occupationField;
     private JButton okayButton;
     private FormListener formListener;
-    private JList<String> ageList;
+    private JList<AgeCategory> ageList;
     public FormPanel(){
         //preferred size return object call Dimension
         Dimension dimension = getPreferredSize();
@@ -37,12 +37,12 @@ public class FormPanel extends JPanel {
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
         okayButton = new JButton("Okay");
-        ageList = new JList<>();
+        ageList = new JList<AgeCategory>();
 
-        DefaultListModel<String> ageModel = new DefaultListModel<>();
-        ageModel.addElement("Under 18");
-        ageModel.addElement("18 - 65");
-        ageModel.addElement("65 or over");
+        DefaultListModel<AgeCategory> ageModel = new DefaultListModel<>();
+        ageModel.addElement(new AgeCategory(0, "Under 18"));
+        ageModel.addElement(new AgeCategory(1, "18 - 65"));
+        ageModel.addElement(new AgeCategory(2, "65 or over"));
         ageList.setModel(ageModel);
         ageList.setPreferredSize(new Dimension(115, 80));
         ageList.setBorder(BorderFactory.createEtchedBorder());
@@ -113,9 +113,12 @@ public class FormPanel extends JPanel {
         okayButton.addActionListener(e -> {
             String name = nameField.getText();
             String occupation = occupationField.getText();
-            String ageCat = ageList.getSelectedValue();
-            System.out.println(ageCat);
-            FormEvent formEvent = new FormEvent(this, name, occupation);
+            AgeCategory ageCat = ageList.getSelectedValue();
+            System.out.println(ageCat.getId());
+            FormEvent formEvent = new FormEvent(this,
+                    name,
+                    occupation,
+                    ageCat.getId());
 
             if (formListener != null) {
                 formListener.formEventOccurred(formEvent);
@@ -128,5 +131,19 @@ public class FormPanel extends JPanel {
 
     public void setFormListener(FormListener formListener) {
         this.formListener = formListener;
+    }
+}
+class AgeCategory{
+    private String text;
+    private int id;
+    public  AgeCategory(int id, String text){
+        this.id = id;
+        this.text = text;
+    }
+    public String toString(){
+        return text;
+    }
+    public int getId(){
+        return id;
     }
 }
