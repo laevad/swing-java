@@ -53,8 +53,13 @@ public class Database {
         String checkSql = "Select count(*) as count from people where id=?";
         PreparedStatement checkPreparedStatement = connection.prepareStatement(checkSql);
 
-        String insertSql = "insert into people (id, name, age , employment_status, tax_id, us_citizen, gender, occupation) values (? , ? , ? , ? , ? , ? , ? , ?)";
+        String insertSql = "insert into people (id, name, age , employment_status, tax_id, " +
+                "us_citizen, gender, occupation) values (? , ? , ? , ? , ? , ? , ? , ?)";
         PreparedStatement insertStatement = connection.prepareStatement(insertSql);
+
+        String updateSql = "update people set name=?, age=? , employment_status=?, tax_id=?, " +
+                "us_citizen=?, gender=?, occupation=? where id=?";
+        PreparedStatement updateStatement = connection.prepareStatement(updateSql);
 
         for (Person person: people){
             int id = person.getId();
@@ -85,10 +90,23 @@ public class Database {
                 insertStatement.executeUpdate();
             }else {
                 System.out.println("update id: "+ id);
+
+                int col = 1;
+                updateStatement.setString(col++, name);
+                updateStatement.setString(col++, age.name());
+                updateStatement.setString(col++, emp.name());
+                updateStatement.setString(col++, tax);
+                updateStatement.setBoolean(col++, isUs);
+                updateStatement.setString(col++, gender.name());
+                updateStatement.setString(col++, occupation);
+                updateStatement.setInt(col++, id);
+
+                updateStatement.executeUpdate();
             }
 
             System.out.println("Count for person with id "+ id + " is "+ count);
         }
+        updateStatement.close();
         insertStatement.close();
         checkPreparedStatement.close();
     }
