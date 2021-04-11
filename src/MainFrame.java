@@ -7,7 +7,6 @@ public class MainFrame extends JFrame {
     // component - private instance variables
     private TextPanel textPanel;
     private Toolbar toolbar;
-    private JButton button;
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -33,20 +32,12 @@ public class MainFrame extends JFrame {
         // create new object
         textPanel = new TextPanel();
         toolbar = new Toolbar();
-        button = new JButton("Click Me");
 
-
-        //add listener // when click the button
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textPanel.appendText("Hello\n"); // call the method appendText
-            }
-        });
+        // pass the construct and implement some stuff
+        toolbar.setTextPanel(textPanel);
 
         // place the object
         add(toolbar, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
-        add(button, BorderLayout.SOUTH);
     }
 }
