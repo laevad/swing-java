@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,9 @@ public class Toolbar extends JPanel implements ActionListener {
          */
         //to get them to the left just add parameter to constructor
         setLayout(new FlowLayout(FlowLayout.LEFT));
+        Border innerBorder = BorderFactory.createEtchedBorder();
+        Border outerBorder = BorderFactory.createEmptyBorder(0, 0, 5 , 0);
+        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
         // add object to layout
         add(helloBtn);
