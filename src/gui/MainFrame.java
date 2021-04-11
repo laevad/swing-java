@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class MainFrame extends JFrame {
     // component - private instance variables
@@ -18,6 +19,7 @@ public class MainFrame extends JFrame {
     private Controller controller;
     private TablePanel tablePanel;
     private PrefsDialog prefsDialog;
+    private Preferences prefs;
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -49,6 +51,7 @@ public class MainFrame extends JFrame {
         controller = new Controller();
         tablePanel = new TablePanel();
         prefsDialog = new PrefsDialog(this);
+        prefs = Preferences.userRoot().node("db");
 
 
 
@@ -66,6 +69,21 @@ public class MainFrame extends JFrame {
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
+
+        //pref
+        prefsDialog.setPresListener(new PrefsListener() {
+            @Override
+            public void preferencesSet(String user, String password, int port) {
+                // install somewhere in os
+                prefs.put("user", user);
+                prefs.put("password", password);
+                prefs.putInt("port", port);
+            }
+        });
+        String user = prefs.get("user", "");
+        String password = prefs.get("password", "");
+        Integer port = prefs.getInt("port", 3306);
+        prefsDialog.setDefaults(user, password, port);
 
         formPanel.setFormListener(e -> {
             controller.addPerson(e);
