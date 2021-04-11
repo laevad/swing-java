@@ -1,10 +1,14 @@
 package model;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Database {
     private List<Person> people;
+    private Connection connection;
     public Database(){
         people = new LinkedList<>();
     }
@@ -32,5 +36,18 @@ public class Database {
 
     public void removePerson(int index) {
         people.remove(index);
+    }
+    public void connect() throws ClassNotFoundException, SQLException {
+        if (connection != null) return;
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String connectionUrl = "jdbc:mysql://localhost:3306/";
+        connection = DriverManager.getConnection(connectionUrl, "root", "");
+        System.out.println("Connected: "+ connection);
+    }
+    public void disconnect() throws SQLException {
+        if (connection != null){
+            connection.close();
+        }
     }
 }
