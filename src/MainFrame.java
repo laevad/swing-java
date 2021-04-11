@@ -9,6 +9,7 @@ public class MainFrame extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
+    private JFileChooser fileChooser;
 
     public MainFrame(){
         super("Hello World"); // title bar
@@ -38,6 +39,7 @@ public class MainFrame extends JFrame {
         toolbar = new Toolbar();
         formPanel = new FormPanel();
         setJMenuBar(createMenuBar());
+        fileChooser = new JFileChooser();
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
@@ -96,13 +98,22 @@ public class MainFrame extends JFrame {
                 formPanel.setVisible(menuItem.isSelected());
             }
         });
-
-        //Mnemonics
-        fileMenuBar.setMnemonic(KeyEvent.VK_F);
-        exitItem.setMnemonic(KeyEvent.VK_X);
-
-        //Accelerator
-        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        importDataITem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+            }
+        });
+        exportDataITem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+            }
+        });
 
         exitItem.addActionListener(new ActionListener() {
             @Override
@@ -117,6 +128,14 @@ public class MainFrame extends JFrame {
                 }
             }
         });
+
+        //Mnemonics
+        fileMenuBar.setMnemonic(KeyEvent.VK_F);
+        exitItem.setMnemonic(KeyEvent.VK_X);
+
+        //Accelerator
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+
         return menuBar;
     }
 }
