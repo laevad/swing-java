@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
         toolbar = new Toolbar();
 
         // pass the construct and implement some stuff
-        toolbar.setTextPanel(textPanel);
+        toolbar.setTextListener(text -> textPanel.appendText(text));
 
         // place the object
         add(toolbar, BorderLayout.NORTH);
