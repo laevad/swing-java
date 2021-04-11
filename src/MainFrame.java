@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     // component - private instance variables
@@ -79,9 +81,19 @@ public class MainFrame extends JFrame {
         fileMenuBar.add(exitItem);
 
         JMenu showMenu = new JMenu("Show");
-        JMenuItem showFormItem = new JMenuItem("Person Form");
+        final JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
+        showFormItem.setSelected(true);
+
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
+
+        showFormItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCheckBoxMenuItem menuItem =(JCheckBoxMenuItem) e.getSource();
+                formPanel.setVisible(menuItem.isSelected());
+            }
+        });
 
         return menuBar;
     }
