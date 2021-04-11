@@ -7,6 +7,7 @@ public class MainFrame extends JFrame {
     // component - private instance variables
     private TextPanel textPanel;
     private Toolbar toolbar;
+    private FormPanel formPanel;
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -32,6 +33,7 @@ public class MainFrame extends JFrame {
         // create new object
         textPanel = new TextPanel();
         toolbar = new Toolbar();
+        formPanel = new FormPanel();
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
@@ -39,5 +41,6 @@ public class MainFrame extends JFrame {
         // place the object
         add(toolbar, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
+        add(formPanel, BorderLayout.WEST);
     }
 }
