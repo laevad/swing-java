@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,59 +28,7 @@ public class PrefsDialog extends JDialog {
         spinnerNumberModel = new SpinnerNumberModel(3306, 0, 9999, 1);
         portSpinner = new JSpinner(spinnerNumberModel);
 
-        setLayout(new GridBagLayout());
-
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
-        gridBagConstraints.gridy = 0;
-
-        // row
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-
-        gridBagConstraints.gridx = 0;
-
-        add(new JLabel("User: "), gridBagConstraints);
-
-        gridBagConstraints.gridx++;
-        add(userfield, gridBagConstraints);
-
-        // row
-        gridBagConstraints.gridy++;
-
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 0.001;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-
-        gridBagConstraints.gridx = 0;
-
-        add(new JLabel("Password: "), gridBagConstraints);
-
-        gridBagConstraints.gridx++;
-        add(passwordField, gridBagConstraints);
-        // row
-        gridBagConstraints.gridy++;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-
-        gridBagConstraints.gridx = 0;
-
-        add(new JLabel("Port: "), gridBagConstraints);
-
-        gridBagConstraints.gridx++;
-        add(portSpinner, gridBagConstraints);
-
-        // next row
-        gridBagConstraints.gridy++;
-
-
-        gridBagConstraints.gridx = 0;
-        add(okButton, gridBagConstraints);
-
-        gridBagConstraints.gridx++;
-        add(cancelButton, gridBagConstraints);
+        layoutControls();
 
         okButton.addActionListener(new ActionListener() {
             @Override
@@ -109,9 +58,95 @@ public class PrefsDialog extends JDialog {
             }
         });
 
-        setSize(250, 200);
+        setSize(250, 210);
         setResizable(false);
         setLocationRelativeTo(parentFrame);
+    }
+
+    private void layoutControls() {
+        JPanel controlsPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+
+        int space = 10;
+        Border spaceBordxer = BorderFactory.createEmptyBorder(space, space, space, space);
+        Border titleBorder = BorderFactory.createTitledBorder("Database Preferences");
+
+        controlsPanel.setBorder(BorderFactory.createCompoundBorder(spaceBordxer, titleBorder));
+
+//        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        controlsPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+        gridBagConstraints.gridy = 0;
+
+        Insets rightPadding = new Insets(0,0,0, 10);
+        Insets noPadding = new Insets(0,0,0, 0);
+
+        // row
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+
+        gridBagConstraints.gridx = 0;
+
+        gridBagConstraints.anchor = GridBagConstraints.EAST;
+        gridBagConstraints.insets = rightPadding;
+        controlsPanel.add(new JLabel("User: "), gridBagConstraints);
+
+        gridBagConstraints.gridx++;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        gridBagConstraints.insets = noPadding;
+        controlsPanel.add(userfield, gridBagConstraints);
+
+        // row
+        gridBagConstraints.gridy++;
+
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.001;
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+
+        gridBagConstraints.gridx = 0;
+
+        gridBagConstraints.anchor = GridBagConstraints.EAST;
+        gridBagConstraints.insets = rightPadding;
+        controlsPanel.add(new JLabel("Password: "), gridBagConstraints);
+
+        gridBagConstraints.gridx++;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        gridBagConstraints.insets = noPadding;
+        controlsPanel.add(passwordField, gridBagConstraints);
+        // row
+        gridBagConstraints.gridy++;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+
+        gridBagConstraints.gridx = 0;
+
+        gridBagConstraints.anchor = GridBagConstraints.EAST;
+        gridBagConstraints.insets = rightPadding;
+        controlsPanel.add(new JLabel("Port: "), gridBagConstraints);
+
+        gridBagConstraints.gridx++;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        gridBagConstraints.insets = noPadding;
+        controlsPanel.add(portSpinner, gridBagConstraints);
+
+        // button row
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(okButton);
+        buttonPanel.add(cancelButton);
+
+        Dimension btnSize = cancelButton.getPreferredSize();
+        okButton.setPreferredSize(btnSize);
+
+        // add sub panels to dialog
+        setLayout(new BorderLayout());
+        add(controlsPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
     }
 
     public void setPresListener(PrefsListener prefsListener) {
