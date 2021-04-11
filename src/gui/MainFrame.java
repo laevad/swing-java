@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
     private JFileChooser fileChooser;
     private Controller controller;
     private TablePanel tablePanel;
+    private PrefsDialog prefsDialog;
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -44,11 +45,17 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
-        setJMenuBar(createMenuBar());
         fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(new PersonFileFilter());
         controller = new Controller();
         tablePanel = new TablePanel();
+        prefsDialog = new PrefsDialog(this);
+
+
+
+        setJMenuBar(createMenuBar());
+
+        fileChooser.addChoosableFileFilter(new PersonFileFilter());
+
         tablePanel.setData(controller.getPeople());
         tablePanel.setPersonTableListener(new PersonTableListener() {
                                               public void rowDeleted(int row) {
@@ -93,6 +100,15 @@ public class MainFrame extends JFrame {
 
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
+
+        JMenuItem prefsItem = new JMenuItem("Preferences...");
+        windowMenu.add(prefsItem);
+        prefsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                prefsDialog.setVisible(true);
+            }
+        });
 
         showFormItem.addActionListener(new ActionListener() {
             @Override
