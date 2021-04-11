@@ -9,6 +9,7 @@ public class FormPanel extends JPanel {
     private JTextField occupationField;
     private JButton okayButton;
     private FormListener formListener;
+    private JList<String> ageList;
     public FormPanel(){
         //preferred size return object call Dimension
         Dimension dimension = getPreferredSize();
@@ -30,12 +31,22 @@ public class FormPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        // create object
+        // create object or component
         nameLabel = new JLabel("Name: ");
         occupationLabel = new JLabel("Occupation: ");
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
         okayButton = new JButton("Okay");
+        ageList = new JList<>();
+
+        DefaultListModel<String> ageModel = new DefaultListModel<>();
+        ageModel.addElement("Under 18");
+        ageModel.addElement("18 - 65");
+        ageModel.addElement("65 or over");
+        ageList.setModel(ageModel);
+        ageList.setPreferredSize(new Dimension(115, 80));
+        ageList.setBorder(BorderFactory.createEtchedBorder());
+        ageList.setSelectedIndex(0);
 
         //set positioning .. grid
 //        first row
@@ -79,11 +90,21 @@ public class FormPanel extends JPanel {
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
         add(occupationField, gridBagConstraints);
 
-//        third row
+        //        third row
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.1;
+
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+        add(ageList, gridBagConstraints);
+
+//        Fourth row
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 2;
 
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new Insets(0,0,0,0);
@@ -92,6 +113,8 @@ public class FormPanel extends JPanel {
         okayButton.addActionListener(e -> {
             String name = nameField.getText();
             String occupation = occupationField.getText();
+            String ageCat = ageList.getSelectedValue();
+            System.out.println(ageCat);
             FormEvent formEvent = new FormEvent(this, name, occupation);
 
             if (formListener != null) {
