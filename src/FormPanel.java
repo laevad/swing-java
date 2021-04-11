@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class FormPanel extends JPanel {
     private JLabel nameLabel;
@@ -45,6 +46,7 @@ public class FormPanel extends JPanel {
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
         okayButton = new JButton("Okay");
+
         ageList = new JList<>();
         empCombo = new JComboBox<>();
         citizenCheck = new JCheckBox();
@@ -70,6 +72,11 @@ public class FormPanel extends JPanel {
         // set up tax id
         taxLabel.setEnabled(false);
         taxField.setEnabled(false);
+
+        //set up Mnemonics
+        okayButton.setMnemonic(KeyEvent.VK_O);
+        nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+        nameLabel.setLabelFor(nameField);
 
         citizenCheck.addActionListener(new ActionListener() {
             @Override
