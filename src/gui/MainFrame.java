@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class MainFrame extends JFrame {
     // component - private instance variables
@@ -99,6 +100,16 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                    try {
+                        controller.loadFromFile(fileChooser.getSelectedFile());
+                        tablePanel.refresh();
+                    } catch (IOException ioException) {
+                        JOptionPane.showMessageDialog(MainFrame.this,
+                                "Could not load data from file", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    } catch (ClassNotFoundException classNotFoundException) {
+                        classNotFoundException.printStackTrace();
+                    }
                     System.out.println(fileChooser.getSelectedFile());
                 }
             }
@@ -107,6 +118,13 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                    try {
+                        controller.saveToFile(fileChooser.getSelectedFile());
+                    } catch (IOException ioException) {
+                        JOptionPane.showMessageDialog(MainFrame.this,
+                                "Could not save data to file", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     System.out.println(fileChooser.getSelectedFile());
                 }
             }
