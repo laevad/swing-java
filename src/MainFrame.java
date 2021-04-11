@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     // component - private instance variables
-    private JTextArea textArea;
+    private TextPanel textPanel;
     private JButton button;
     public MainFrame(){
         super("Hello World"); // title bar
@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
 
         // create new object
-        textArea = new JTextArea();
+        textPanel = new TextPanel();
         button = new JButton("Click Me");
 
 
@@ -38,12 +38,12 @@ public class MainFrame extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                textArea.append("hello\n");
+                textPanel.appendText("Hello\n"); // call the method appendText
             }
         });
 
         // place the object
-        add(textArea, BorderLayout.CENTER);
+        add(textPanel, BorderLayout.CENTER);
         add(button, BorderLayout.SOUTH);
     }
 }
