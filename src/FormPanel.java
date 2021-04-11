@@ -10,6 +10,7 @@ public class FormPanel extends JPanel {
     private JButton okayButton;
     private FormListener formListener;
     private JList<AgeCategory> ageList;
+    private JComboBox<Object> empCombo;
     public FormPanel(){
         //preferred size return object call Dimension
         Dimension dimension = getPreferredSize();
@@ -27,9 +28,8 @@ public class FormPanel extends JPanel {
         // combine the border together
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
-//        setLayout
+        //        setLayout
         setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         // create object or component
         nameLabel = new JLabel("Name: ");
@@ -37,8 +37,44 @@ public class FormPanel extends JPanel {
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
         okayButton = new JButton("Okay");
-        ageList = new JList<AgeCategory>();
+        ageList = new JList<>();
+        empCombo = new JComboBox<>();
 
+        // combo box (next row)
+        DefaultComboBoxModel<Object> empModel = new DefaultComboBoxModel<>();
+        empModel.addElement("employed");
+        empModel.addElement("self employed");
+        empModel.addElement("unemployed");
+        empCombo.setModel(empModel);
+
+
+        layoutComponents();
+
+        okayButton.addActionListener(e -> {
+            String name = nameField.getText();
+            String occupation = occupationField.getText();
+            AgeCategory ageCat = ageList.getSelectedValue();
+            String empCat = (String) empCombo.getSelectedItem();
+            System.out.println(ageCat.getId());
+            System.out.println(empCat);
+            FormEvent formEvent = new FormEvent(this,
+                    name,
+                    occupation,
+                    ageCat.getId(),
+                    empCat);
+
+            if (formListener != null) {
+                formListener.formEventOccurred(formEvent);
+            }
+        });
+
+
+
+    }
+
+    public void layoutComponents(){
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        // list box
         DefaultListModel<AgeCategory> ageModel = new DefaultListModel<>();
         ageModel.addElement(new AgeCategory(0, "Under 18"));
         ageModel.addElement(new AgeCategory(1, "18 - 65"));
@@ -51,17 +87,19 @@ public class FormPanel extends JPanel {
         //set positioning .. grid
 //        first row
         //weigh mean how  much space it take up relative to, to the other cells
+
+
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 0.1;
-
-        gridBagConstraints.gridx = 0; // row
         gridBagConstraints.gridy =0; // column
+        gridBagConstraints.gridx = 0; // row
+
 
         /*
-        * can be set to horizontal , vertical, none or both
-        * and that tells your components, whether to take up all the space
-        * int the cell , or not, and I probably don't want mine to so none
-        * */
+         * can be set to horizontal , vertical, none or both
+         * and that tells your components, whether to take up all the space
+         * int the cell , or not, and I probably don't want mine to so none
+         * */
         gridBagConstraints.fill = GridBagConstraints.NONE;
 
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
@@ -74,11 +112,11 @@ public class FormPanel extends JPanel {
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
         add(nameField,gridBagConstraints);
 
-//        second row
+//        next row
+        gridBagConstraints.gridy++;
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 0.1;
 
-        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.insets = new Insets(0,0,0,5);   // no padding for field
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
@@ -90,43 +128,51 @@ public class FormPanel extends JPanel {
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
         add(occupationField, gridBagConstraints);
 
-        //        third row
+        //        next row - list box
+        gridBagConstraints.gridy++;
+
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 0.1;
 
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.insets = new Insets(0,0,0,5);   // no padding for field
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        add(new JLabel("Age: "), gridBagConstraints);
+
+
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new Insets(0,0,0,0);
         add(ageList, gridBagConstraints);
 
-//        Fourth row
+        //        next row - list box
+        gridBagConstraints.gridy++;
+
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.1;
+
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.insets = new Insets(0,0,0,5);   // no padding for field
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        add(new JLabel("Employment: "), gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+        add(empCombo, gridBagConstraints);
+
+
+
+//        next row
+        gridBagConstraints.gridy++;
+
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 2;
 
-        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new Insets(0,0,0,0);
         add(okayButton, gridBagConstraints);
-
-        okayButton.addActionListener(e -> {
-            String name = nameField.getText();
-            String occupation = occupationField.getText();
-            AgeCategory ageCat = ageList.getSelectedValue();
-            System.out.println(ageCat.getId());
-            FormEvent formEvent = new FormEvent(this,
-                    name,
-                    occupation,
-                    ageCat.getId());
-
-            if (formListener != null) {
-                formListener.formEventOccurred(formEvent);
-            }
-        });
-
-
-
     }
 
     public void setFormListener(FormListener formListener) {
