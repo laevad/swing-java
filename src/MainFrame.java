@@ -15,6 +15,7 @@ public class MainFrame extends JFrame {
         setVisible(true); // make it visible
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //to terminate
         setSize(600,500); // to set size
+        setMinimumSize(new Dimension(500, 400));
 
         // Border Layout
         /*
@@ -106,7 +107,14 @@ public class MainFrame extends JFrame {
         exitItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                int action = JOptionPane.showConfirmDialog(
+                        MainFrame.this,
+                        "Do you really want to exit",
+                        "Confirm Exit",
+                        JOptionPane.OK_CANCEL_OPTION);
+                if (action == JOptionPane.OK_OPTION){
+                    System.exit(0);
+                }
             }
         });
         return menuBar;
