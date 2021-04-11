@@ -17,7 +17,6 @@ public class MainFrame extends JFrame {
     private JFileChooser fileChooser;
     private Controller controller;
     private TablePanel tablePanel;
-
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -51,6 +50,12 @@ public class MainFrame extends JFrame {
         controller = new Controller();
         tablePanel = new TablePanel();
         tablePanel.setData(controller.getPeople());
+        tablePanel.setPersonTableListener(new PersonTableListener() {
+                                              public void rowDeleted(int row) {
+                                                  controller.removePerson(row);
+                                                  System.out.println(row);
+                                              }
+                                          });
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));

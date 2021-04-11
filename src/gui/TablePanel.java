@@ -14,6 +14,8 @@ public class TablePanel extends JPanel {
     private JTable table;
     private PersonTableModel tableModel;
     private JPopupMenu popupMenu;
+    private PersonTableListener personTableListener;
+
     public TablePanel(){
         tableModel = new PersonTableModel();
         table = new JTable(tableModel);
@@ -23,6 +25,7 @@ public class TablePanel extends JPanel {
         popupMenu.add(removeItem);
 
         table.addMouseListener(new MouseListener() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
 
@@ -34,12 +37,6 @@ public class TablePanel extends JPanel {
                 table.getSelectionModel().setSelectionInterval(row, row);
                 if(e.getButton() == MouseEvent.BUTTON3){
                     popupMenu.show(table, e.getX(), e.getY());
-                    removeItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            int row = table.getSelectedRow();
-                        }
-                    });
                 }
             }
 
@@ -57,9 +54,17 @@ public class TablePanel extends JPanel {
             public void mouseExited(MouseEvent e) {
 
             }
-
         });
-
+        removeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = table.getSelectedRow();
+                if(personTableListener != null){
+                    personTableListener.rowDeleted(row);
+                    tableModel.fireTableDataChanged();
+                }
+            }
+        });
         setLayout(new BorderLayout());
 
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -70,5 +75,9 @@ public class TablePanel extends JPanel {
 
     public void refresh() {
         tableModel.fireTableDataChanged();
+    }
+
+    public void setPersonTableListener(PersonTableListener personTableListener) {
+        this.personTableListener = personTableListener ;
     }
 }
