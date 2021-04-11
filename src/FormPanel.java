@@ -25,6 +25,9 @@ public class FormPanel extends JPanel {
         // combine the border together
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
+//        setLayout
+        setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         // create object
         nameLabel = new JLabel("Name: ");
@@ -32,5 +35,60 @@ public class FormPanel extends JPanel {
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
         okayButton = new JButton("Okay");
+
+        //set positioning .. grid
+//        first row
+        //weigh mean how  much space it take up relative to, to the other cells
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.1;
+
+        gridBagConstraints.gridx = 0; // row
+        gridBagConstraints.gridy =0; // column
+
+        /*
+        * can be set to horizontal , vertical, none or both
+        * and that tells your components, whether to take up all the space
+        * int the cell , or not, and I probably don't want mine to so none
+        * */
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+
+        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new Insets(0,0,0,5); // add padding for label
+        add(nameLabel, gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new Insets(0,0,0,0);  // no padding for field
+        gridBagConstraints.anchor = GridBagConstraints.LINE_START;
+        add(nameField,gridBagConstraints);
+
+//        second row
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.1;
+
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.insets = new Insets(0,0,0,5);   // no padding for field
+        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+        add(occupationLabel, gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+        gridBagConstraints.anchor = GridBagConstraints.LINE_START;
+        add(occupationField, gridBagConstraints);
+
+//        third row
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 2;
+
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+        add(okayButton, gridBagConstraints);
+
+
+
     }
 }
