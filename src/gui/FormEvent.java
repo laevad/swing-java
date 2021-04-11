@@ -1,3 +1,5 @@
+package gui;
+
 import java.util.EventObject;
 
 //object that store data temporary
