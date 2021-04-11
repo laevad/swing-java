@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FormPanel extends JPanel {
     private JLabel nameLabel;
@@ -11,6 +13,9 @@ public class FormPanel extends JPanel {
     private FormListener formListener;
     private JList<AgeCategory> ageList;
     private JComboBox<Object> empCombo;
+    private JCheckBox citizenCheck;
+    private JTextField taxField;
+    private JLabel taxLabel;
     public FormPanel(){
         //preferred size return object call Dimension
         Dimension dimension = getPreferredSize();
@@ -39,6 +44,9 @@ public class FormPanel extends JPanel {
         okayButton = new JButton("Okay");
         ageList = new JList<>();
         empCombo = new JComboBox<>();
+        citizenCheck = new JCheckBox();
+        taxField = new JTextField(10);
+        taxLabel = new JLabel("Tax ID: ");
 
         // combo box (next row)
         DefaultComboBoxModel<Object> empModel = new DefaultComboBoxModel<>();
@@ -46,6 +54,19 @@ public class FormPanel extends JPanel {
         empModel.addElement("self employed");
         empModel.addElement("unemployed");
         empCombo.setModel(empModel);
+
+        // set up tax id
+        taxLabel.setEnabled(false);
+        taxField.setEnabled(false);
+
+        citizenCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isTicked = citizenCheck.isSelected();
+                taxLabel.setEnabled(isTicked);
+                taxField.setEnabled(isTicked);
+            }
+        });
 
 
         layoutComponents();
@@ -55,13 +76,17 @@ public class FormPanel extends JPanel {
             String occupation = occupationField.getText();
             AgeCategory ageCat = ageList.getSelectedValue();
             String empCat = (String) empCombo.getSelectedItem();
+            String taxId = taxField.getText();
+            boolean usCitizen = citizenCheck.isSelected();
             System.out.println(ageCat.getId());
             System.out.println(empCat);
             FormEvent formEvent = new FormEvent(this,
                     name,
                     occupation,
                     ageCat.getId(),
-                    empCat);
+                    empCat,
+                    taxId,
+                    usCitizen);
 
             if (formListener != null) {
                 formListener.formEventOccurred(formEvent);
@@ -160,6 +185,37 @@ public class FormPanel extends JPanel {
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new Insets(0,0,0,0);
         add(empCombo, gridBagConstraints);
+
+        //        next row - list box
+        gridBagConstraints.gridy++;
+
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.1;
+
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.insets = new Insets(0,0,0,5);   // no padding for field
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        add(new JLabel("US Citizen: "), gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+        add(citizenCheck, gridBagConstraints);
+        //        next row - list box
+        gridBagConstraints.gridy++;
+
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0.1;
+
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.insets = new Insets(0,0,0,5);   // no padding for field
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        add(taxLabel, gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+        add(taxField, gridBagConstraints);
 
 
 
