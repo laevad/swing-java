@@ -15,12 +15,13 @@ public class MainFrame extends JFrame {
     private FormPanel formPanel;
     private JFileChooser fileChooser;
     private Controller controller;
+    private TablePanel tablePanel;
 
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //to terminate
-        setSize(600,500); // to set size
+        setSize(1280,500); // to set size
         setMinimumSize(new Dimension(500, 400));
 
         // Border Layout
@@ -47,32 +48,20 @@ public class MainFrame extends JFrame {
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
         controller = new Controller();
+        tablePanel = new TablePanel();
+        tablePanel.setData(controller.getPeople());
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
 
         formPanel.setFormListener(e -> {
-            String name = e.getName();
-            String occupation = e.getOccupation();
-            int ageCategory = e.getAgeCategory();
-            String empCat = e.getEmpCat();
-            String taxId = e.getTaxId();
-            String gender = e.getGender();
-            boolean usCitizen = e.isUsCitizen();
-
-            textPanel.appendText(name+" : "+
-                    occupation+" : "+
-                    ageCategory+" : "+
-                    empCat+" : "+
-                    taxId+" : "+" : "+
-                    usCitizen+" : "+
-                    gender+"\n");
             controller.addPerson(e);
+            tablePanel.refresh();
         });
 
         // place the object
         add(toolbar, BorderLayout.NORTH);
-        add(textPanel, BorderLayout.CENTER);
+        add(tablePanel, BorderLayout.CENTER);
         add(formPanel, BorderLayout.WEST);
     }
     private JMenuBar createMenuBar(){
