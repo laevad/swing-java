@@ -3,6 +3,11 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class FormPanel extends JPanel {
+    private JLabel nameLabel;
+    private JLabel occupationLabel;
+    private JTextField nameField;
+    private JTextField occupationField;
+    private JButton okayButton;
     public FormPanel(){
         //preferred size return object call Dimension
         Dimension dimension = getPreferredSize();
@@ -19,5 +24,13 @@ public class FormPanel extends JPanel {
         Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5 , 5);
         // combine the border together
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+
+        // create object
+        nameLabel = new JLabel("Name: ");
+        occupationLabel = new JLabel("Occupation: ");
+        nameField = new JTextField(10);
+        occupationField = new JTextField(10);
+        okayButton = new JButton("Okay");
     }
 }
