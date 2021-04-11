@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class MainFrame extends JFrame {
     // component - private instance variables
     private TextPanel textPanel;
+    private Toolbar toolbar;
     private JButton button;
     public MainFrame(){
         super("Hello World"); // title bar
@@ -31,6 +32,7 @@ public class MainFrame extends JFrame {
 
         // create new object
         textPanel = new TextPanel();
+        toolbar = new Toolbar();
         button = new JButton("Click Me");
 
 
@@ -43,6 +45,7 @@ public class MainFrame extends JFrame {
         });
 
         // place the object
+        add(toolbar, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
         add(button, BorderLayout.SOUTH);
     }
