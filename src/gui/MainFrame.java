@@ -151,6 +151,8 @@ public class MainFrame extends JFrame {
         //Accelerator
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 
+        importDataITem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
+
         return menuBar;
     }
 }
