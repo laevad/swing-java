@@ -1,4 +1,4 @@
-import model.Database;
+import model.*;
 
 import java.sql.SQLException;
 
@@ -8,6 +8,9 @@ public class TestDatabase {
 
         Database db = new Database();
         db.connect();
+        db.addPerson(new Person("Al Dave", "pro", AgeCategory.adult, EmploymentCategory.employed, "123", true, Gender.male));
+        db.addPerson(new Person("Al Dave", "pro", AgeCategory.adult, EmploymentCategory.employed, "123", true, Gender.male));
+        db.save();
         db.disconnect();
     }
 }
