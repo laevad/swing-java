@@ -6,6 +6,7 @@ public class MainFrame extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
+
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -32,6 +33,7 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        setJMenuBar(createMenuBar());
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
@@ -58,5 +60,29 @@ public class MainFrame extends JFrame {
         add(toolbar, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
         add(formPanel, BorderLayout.WEST);
+    }
+    private JMenuBar createMenuBar(){
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenuBar = new JMenu("File");
+        JMenu windowMenu = new JMenu("Window");
+        menuBar.add(fileMenuBar);
+        menuBar.add(windowMenu);
+
+        JMenuItem exportDataITem = new JMenuItem("Export Data...");
+        JMenuItem importDataITem = new JMenuItem("Import Data...");
+        JMenuItem exitItem = new JMenuItem("Exit");
+
+        fileMenuBar.add(exportDataITem);
+        fileMenuBar.add(importDataITem);
+        fileMenuBar.addSeparator();
+        fileMenuBar.add(exitItem);
+
+        JMenu showMenu = new JMenu("Show");
+        JMenuItem showFormItem = new JMenuItem("Person Form");
+        showMenu.add(showFormItem);
+        windowMenu.add(showMenu);
+
+        return menuBar;
     }
 }
