@@ -8,6 +8,7 @@ public class FormPanel extends JPanel {
     private JTextField nameField;
     private JTextField occupationField;
     private JButton okayButton;
+    private FormListener formListener;
     public FormPanel(){
         //preferred size return object call Dimension
         Dimension dimension = getPreferredSize();
@@ -88,7 +89,21 @@ public class FormPanel extends JPanel {
         gridBagConstraints.insets = new Insets(0,0,0,0);
         add(okayButton, gridBagConstraints);
 
+        okayButton.addActionListener(e -> {
+            String name = nameField.getText();
+            String occupation = occupationField.getText();
+            FormEvent formEvent = new FormEvent(this, name, occupation);
+
+            if (formListener != null) {
+                formListener.formEventOccurred(formEvent);
+            }
+        });
 
 
+
+    }
+
+    public void setFormListener(FormListener formListener) {
+        this.formListener = formListener;
     }
 }

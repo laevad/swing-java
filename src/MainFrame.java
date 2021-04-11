@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     // component - private instance variables
@@ -37,6 +35,12 @@ public class MainFrame extends JFrame {
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
+
+        formPanel.setFormListener(e -> {
+            String name = e.getName();
+            String occupation = e.getOccupation();
+            textPanel.appendText(name+" : "+occupation+"\n");
+        });
 
         // place the object
         add(toolbar, BorderLayout.NORTH);
