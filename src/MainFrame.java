@@ -40,6 +40,7 @@ public class MainFrame extends JFrame {
         formPanel = new FormPanel();
         setJMenuBar(createMenuBar());
         fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         // pass the construct and implement some stuff
         toolbar.setTextListener(text -> textPanel.appendText(text));
