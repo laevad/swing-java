@@ -11,6 +11,7 @@ public class TestDatabase {
         db.addPerson(new Person("david kun", "pro", AgeCategory.adult, EmploymentCategory.employed, "143", true, Gender.male));
         db.addPerson(new Person("Dave", "pro", AgeCategory.adult, EmploymentCategory.employed, "123", true, Gender.male));
         db.save();
+        db.load();
         db.disconnect();
     }
 }

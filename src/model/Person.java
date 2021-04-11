@@ -29,6 +29,14 @@ public class Person implements Serializable {
         this.id = count;
         count++;
     }
+    public Person(int id,
+            String name,
+            String occupation, AgeCategory ageCategory,
+            EmploymentCategory employmentCategory, String taxId,
+            boolean usCitizen, Gender gender) {
+       this(name, occupation, ageCategory, employmentCategory, taxId, usCitizen, gender);
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -94,5 +102,17 @@ public class Person implements Serializable {
         this.usCitizen = usCitizen;
     }
 
-
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", occupation='" + occupation + '\'' +
+                ", ageCategory=" + ageCategory +
+                ", gender=" + gender +
+                ", employmentCategory=" + employmentCategory +
+                ", taxId='" + taxId + '\'' +
+                ", usCitizen=" + usCitizen +
+                '}';
+    }
 }

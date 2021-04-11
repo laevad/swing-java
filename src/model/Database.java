@@ -110,4 +110,30 @@ public class Database {
         insertStatement.close();
         checkPreparedStatement.close();
     }
+    public void load() throws SQLException {
+        people.clear();
+
+        String sql = "select * from people order by name ";
+        Statement selectStatement = connection.createStatement();
+
+        ResultSet results = selectStatement.executeQuery(sql);
+        while (results.next()){
+            int id = results.getInt("id");
+            String name = results.getString("name");
+            String age = results.getString("age");
+            String emp = results.getString("employment_status");
+            String tax = results.getString("tax_id");
+            boolean isUs = results.getBoolean("us_citizen");
+            String gender = results.getString("gender");
+            String occupation = results.getString("occupation");
+
+            Person person = new Person(id, name, occupation, AgeCategory.valueOf(age), EmploymentCategory.valueOf(emp), tax,
+                    isUs, Gender.valueOf(gender));
+            people.add(person);
+
+            System.out.println(person);
+        }
+        results.close();
+        selectStatement.close();
+    }
 }
