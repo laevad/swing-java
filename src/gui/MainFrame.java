@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
 public class MainFrame extends JFrame {
@@ -68,7 +70,35 @@ public class MainFrame extends JFrame {
                                           });
 
         // pass the construct and implement some stuff
-        toolbar.setTextListener(text -> textPanel.appendText(text));
+        toolbar.setToolbarListener(new ToolbarListener() {
+            @Override
+            public void saveEventOccured() {
+                System.out.println("Save");
+                connect();
+                try {
+                    controller.save();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    JOptionPane.showMessageDialog(MainFrame.this, "Unable to save to database.",
+                            "DATABASE SAVE PROBLEM", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+
+            @Override
+            public void refreshEventOccured() {
+                connect();
+                System.out.println("Refresh");
+                try {
+                    controller.load();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    JOptionPane.showMessageDialog(MainFrame.this, "Unable to load to database.",
+                            "DATABASE CONNECTION PROBLEM", JOptionPane.ERROR_MESSAGE);
+                }
+                tablePanel.refresh();
+            }
+        });
 
         //pref
         prefsDialog.setPresListener(new PrefsListener() {
@@ -95,6 +125,19 @@ public class MainFrame extends JFrame {
         add(tablePanel, BorderLayout.CENTER);
         add(formPanel, BorderLayout.WEST);
     }
+
+    private void connect() {
+        try {
+            controller.connect();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            JOptionPane.showMessageDialog(MainFrame.this, "Cannot connect to database.",
+                    "DATABASE CONNECTION PROBLEM", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private JMenuBar createMenuBar(){
         JMenuBar menuBar = new JMenuBar();
 

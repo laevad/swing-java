@@ -8,17 +8,17 @@ import java.awt.event.ActionListener;
 
 public class Toolbar extends JPanel implements ActionListener {
     //create private instance
-    private JButton helloBtn;
-    private JButton goodbyeBtn;
-    private StringListener textListener;
+    private JButton saveButton;
+    private JButton refreshButton;
+    private ToolbarListener textListener;
 
     public Toolbar(){
         //creating object
-        helloBtn = new JButton("Hello");
-        goodbyeBtn = new JButton("Goodbye");
+        saveButton = new JButton("Save");
+        refreshButton = new JButton("Refresh");
 
-        helloBtn.addActionListener(this);
-        goodbyeBtn.addActionListener(this);
+        saveButton.addActionListener(this);
+        refreshButton.addActionListener(this);
 
         /*
         FlowLayout - FlowLayout is the default layout manager for every JPanel.
@@ -33,11 +33,11 @@ public class Toolbar extends JPanel implements ActionListener {
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
         // add object to layout
-        add(helloBtn);
-        add(goodbyeBtn);
+        add(saveButton);
+        add(refreshButton);
     }
 
-    public void setTextListener(StringListener listener){
+    public void setToolbarListener(ToolbarListener listener){
         this.textListener = listener;
     }
 
@@ -48,13 +48,13 @@ public class Toolbar extends JPanel implements ActionListener {
         System.out.println("\n"+ helloBtn);
          */
         JButton clicked = (JButton) e.getSource();
-        if (clicked == helloBtn){
+        if (clicked == saveButton){
             if(textListener != null){
-                textListener.textEmitted("Hello\n");
+                textListener.saveEventOccured();
             }
-        }else if (clicked == goodbyeBtn){
+        }else if (clicked == refreshButton){
             if(textListener != null){
-                textListener.textEmitted("Goodbye\n");
+                textListener.refreshEventOccured();
             }
         }
 
