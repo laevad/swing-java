@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class Toolbar extends JPanel implements ActionListener {
     //create private instance
@@ -15,7 +16,9 @@ public class Toolbar extends JPanel implements ActionListener {
     public Toolbar(){
         //creating object
         saveButton = new JButton("Save");
+        saveButton.setIcon(createIcon("/images/Save16.gif"));
         refreshButton = new JButton("Refresh");
+        refreshButton.setIcon(createIcon("/images/Refresh16.gif"));
 
         saveButton.addActionListener(this);
         refreshButton.addActionListener(this);
@@ -58,5 +61,13 @@ public class Toolbar extends JPanel implements ActionListener {
             }
         }
 
+    }
+    private ImageIcon createIcon(String path){
+        URL url = getClass().getResource(path);
+        if (url == null){
+            System.err.println("Unable to load "+path);
+        }
+        ImageIcon icon = new ImageIcon(url);
+        return icon;
     }
 }
