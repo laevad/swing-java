@@ -5,9 +5,7 @@ import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
@@ -25,7 +23,7 @@ public class MainFrame extends JFrame {
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //to terminate
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //to terminate
         setSize(1280,500); // to set size
         setMinimumSize(new Dimension(500, 400));
 
@@ -118,6 +116,21 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(e -> {
             controller.addPerson(e);
             tablePanel.refresh();
+        });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Window closing");
+                try {
+                    controller.disconnect();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                dispose();
+                System.gc();
+                super.windowClosing(e);
+            }
         });
 
         // place the object
@@ -221,7 +234,10 @@ public class MainFrame extends JFrame {
                         "Confirm Exit",
                         JOptionPane.OK_CANCEL_OPTION);
                 if (action == JOptionPane.OK_OPTION){
-                    System.exit(0);
+                    WindowListener[] listeners = getWindowListeners();
+                    for (WindowListener listener: listeners){
+                        listener.windowClosing(new WindowEvent(MainFrame.this,0));
+                    }
                 }
             }
         });
