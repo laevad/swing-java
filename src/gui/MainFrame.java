@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
     private PrefsDialog prefsDialog;
     private Preferences prefs;
     private JSplitPane jSplitPane;
+    private JTabbedPane tabbedPane;
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -52,8 +53,13 @@ public class MainFrame extends JFrame {
         controller = new Controller();
         tablePanel = new TablePanel();
         prefsDialog = new PrefsDialog(this);
-        jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,formPanel, tablePanel);
+        tabbedPane = new JTabbedPane();
+        jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,formPanel, tabbedPane);
         jSplitPane.setOneTouchExpandable(true);
+
+        tabbedPane.addTab("Person Database", tablePanel);
+        tabbedPane.addTab("Messages", textPanel);
+//        tabbedPane.setTabComponentAt();
 
         prefs = Preferences.userRoot().node("db");
 
