@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
     private TablePanel tablePanel;
     private PrefsDialog prefsDialog;
     private Preferences prefs;
+    private JSplitPane jSplitPane;
     public MainFrame(){
         super("Hello World"); // title bar
         setVisible(true); // make it visible
@@ -51,9 +52,10 @@ public class MainFrame extends JFrame {
         controller = new Controller();
         tablePanel = new TablePanel();
         prefsDialog = new PrefsDialog(this);
+        jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,formPanel, tablePanel);
+        jSplitPane.setOneTouchExpandable(true);
+
         prefs = Preferences.userRoot().node("db");
-
-
 
         setJMenuBar(createMenuBar());
 
@@ -135,8 +137,7 @@ public class MainFrame extends JFrame {
 
         // place the object
         add(toolbar, BorderLayout.PAGE_START);
-        add(tablePanel, BorderLayout.CENTER);
-        add(formPanel, BorderLayout.WEST);
+        add(jSplitPane, BorderLayout.CENTER);
     }
 
     private void connect() {
@@ -188,6 +189,9 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JCheckBoxMenuItem menuItem =(JCheckBoxMenuItem) e.getSource();
+                if(menuItem.isSelected()){
+                    jSplitPane.setDividerLocation( (int)formPanel.getMinimumSize().getWidth());
+                }
                 formPanel.setVisible(menuItem.isSelected());
             }
         });

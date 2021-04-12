@@ -28,7 +28,7 @@ public class FormPanel extends JPanel {
 //        System.out.println(dimension);
         dimension.width = 250;
         setPreferredSize(dimension);
-
+        setMinimumSize(dimension);
         // border with title
         // the problem with this is to close to other
         // in order to solve that add second border to create some space
