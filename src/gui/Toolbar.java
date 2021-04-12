@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class Toolbar extends JPanel implements ActionListener {
+public class Toolbar extends JToolBar implements ActionListener {
     //create private instance
     private JButton saveButton;
     private JButton refreshButton;
@@ -15,10 +15,12 @@ public class Toolbar extends JPanel implements ActionListener {
 
     public Toolbar(){
         //creating object
-        saveButton = new JButton("Save");
+        saveButton = new JButton();
         saveButton.setIcon(createIcon("/images/Save16.gif"));
-        refreshButton = new JButton("Refresh");
+        saveButton.setToolTipText("Save");
+        refreshButton = new JButton();
         refreshButton.setIcon(createIcon("/images/Refresh16.gif"));
+        refreshButton.setToolTipText("Refresh");
 
         saveButton.addActionListener(this);
         refreshButton.addActionListener(this);
@@ -30,13 +32,18 @@ public class Toolbar extends JPanel implements ActionListener {
         (in short left to right)
          */
         //to get them to the left just add parameter to constructor
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        Border innerBorder = BorderFactory.createEtchedBorder();
-        Border outerBorder = BorderFactory.createEmptyBorder(0, 0, 5 , 0);
-        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+//        setLayout(new FlowLayout(FlowLayout.LEFT));
+//        Border innerBorder = BorderFactory.createEtchedBorder();
+//        Border outerBorder = BorderFactory.createEmptyBorder(0, 0, 5 , 0);
+//        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+        //get rid of the border if you want the toolbar draggable.
+        setBorder(BorderFactory.createEtchedBorder());
+
+//        setFloatable(false);
 
         // add object to layout
         add(saveButton);
+//        addSeparator();
         add(refreshButton);
     }
 
