@@ -20,6 +20,10 @@ public class MessagePanel extends JPanel {
                 DefaultMutableTreeNode defaultMutableTreeNode = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
 
                 Object userObject = defaultMutableTreeNode.getUserObject();
+//                if (userObject instanceof ServerInfo){
+//                    int id = ((ServerInfo) userObject).getId();
+//                    System.out.println("Got user object with ID: "+ id);
+//                }
                 System.out.println(userObject);
             }
         });
@@ -32,18 +36,18 @@ public class MessagePanel extends JPanel {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
 
         DefaultMutableTreeNode branch1 = new DefaultMutableTreeNode("USA");
-        DefaultMutableTreeNode server1 = new DefaultMutableTreeNode("New York");
-        DefaultMutableTreeNode server2 = new DefaultMutableTreeNode("Boston");
-        DefaultMutableTreeNode server3 = new DefaultMutableTreeNode("Los Angeles");
+        DefaultMutableTreeNode server1 = new DefaultMutableTreeNode(new ServerInfo("New York", 0));
+        DefaultMutableTreeNode server2 = new DefaultMutableTreeNode(new ServerInfo("Boston", 1));
+        DefaultMutableTreeNode server3 = new DefaultMutableTreeNode(new ServerInfo("Los Angeles", 3));
 
         branch1.add(server1);
         branch1.add(server2);
         branch1.add(server3);
 
         DefaultMutableTreeNode branch2 = new DefaultMutableTreeNode("UK");
-        DefaultMutableTreeNode server4 = new DefaultMutableTreeNode("gfhtk");
-        DefaultMutableTreeNode server5 = new DefaultMutableTreeNode("erfet");
-        DefaultMutableTreeNode server6 = new DefaultMutableTreeNode("fdgfdges");
+        DefaultMutableTreeNode server4 = new DefaultMutableTreeNode(new ServerInfo("gfhtk", 4));
+        DefaultMutableTreeNode server5 = new DefaultMutableTreeNode(new ServerInfo("erfet", 5));
+        DefaultMutableTreeNode server6 = new DefaultMutableTreeNode(new ServerInfo("fdgfdges", 6));
 
         branch2.add(server4);
         branch2.add(server5);
@@ -53,5 +57,28 @@ public class MessagePanel extends JPanel {
         top.add(branch2);
 
         return top;
+    }
+}
+class ServerInfo{
+    private String name;
+    private int id;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public ServerInfo(String name, int id){
+        this.name = name;
+        this.id = id;
+
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
