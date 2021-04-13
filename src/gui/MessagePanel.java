@@ -1,13 +1,29 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
 public class MessagePanel extends JPanel {
     private JTree serverTree;
     public MessagePanel(){
         serverTree = new JTree(createTree());
+
+        serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+        serverTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode defaultMutableTreeNode = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
+
+                Object userObject = defaultMutableTreeNode.getUserObject();
+                System.out.println(userObject);
+            }
+        });
+
         setLayout(new BorderLayout());
 
         add(new JScrollPane(serverTree), BorderLayout.CENTER);
