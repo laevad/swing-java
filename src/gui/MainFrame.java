@@ -91,31 +91,34 @@ public class MainFrame extends JFrame {
         toolbar.setToolbarListener(new ToolbarListener() {
             @Override
             public void saveEventOccured() {
-                System.out.println("Save");
-                connect();
-                try {
-                    controller.save();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                    JOptionPane.showMessageDialog(MainFrame.this, "Unable to save to database.",
-                            "DATABASE SAVE PROBLEM", JOptionPane.ERROR_MESSAGE);
-                }
+                refresh();
+//                System.out.println("Save");
+//                connect();
+//                try {
+//                    controller.save();
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                    JOptionPane.showMessageDialog(MainFrame.this, "Unable to save to database.",
+//                            "DATABASE SAVE PROBLEM", JOptionPane.ERROR_MESSAGE);
+//                }
 
             }
 
             @Override
             public void refreshEventOccured() {
-                connect();
-                System.out.println("Refresh");
-                try {
-                    controller.load();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                    JOptionPane.showMessageDialog(MainFrame.this, "Unable to load to database.",
-                            "DATABASE CONNECTION PROBLEM", JOptionPane.ERROR_MESSAGE);
-                }
-                tablePanel.refresh();
+                refresh();
+//                connect();
+//                System.out.println("Refresh");
+//                try {
+//                    controller.load();
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                    JOptionPane.showMessageDialog(MainFrame.this, "Unable to load to database.",
+//                            "DATABASE CONNECTION PROBLEM", JOptionPane.ERROR_MESSAGE);
+//                }
+//                tablePanel.refresh();
             }
+
         });
 
         //pref
@@ -152,12 +155,30 @@ public class MainFrame extends JFrame {
                 super.windowClosing(e);
             }
         });
-
+        refresh();
         // place the object
         add(toolbar, BorderLayout.PAGE_START);
         add(jSplitPane, BorderLayout.CENTER);
     }
 
+    public void refresh(){
+        connect();
+        try {
+            controller.save();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            JOptionPane.showMessageDialog(MainFrame.this, "Unable to save to database.",
+                    "DATABASE SAVE PROBLEM", JOptionPane.ERROR_MESSAGE);
+        }
+        try {
+            controller.load();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            JOptionPane.showMessageDialog(MainFrame.this, "Unable to load to database.",
+                    "DATABASE CONNECTION PROBLEM", JOptionPane.ERROR_MESSAGE);
+        }
+        tablePanel.refresh();
+    }
     public static void centreWindow(Window frame) {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
