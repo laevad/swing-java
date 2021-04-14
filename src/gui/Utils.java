@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 public class Utils {
@@ -23,5 +25,14 @@ public class Utils {
         }
         ImageIcon icon = new ImageIcon(url);
         return icon;
+    }
+    public static Font createFont(String path) throws IOException, FontFormatException {
+        URL url = System.class.getResource(path);
+        if (url == null){
+            System.err.println("Unable to Font "+path);
+        }
+        Font font = Font.createFont(Font.TRUETYPE_FONT, url.openStream());
+
+        return font;
     }
 }

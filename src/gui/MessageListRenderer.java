@@ -4,6 +4,7 @@ import model.Message;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /*
 * this demonstrates using a arbitrary component as a list box renderer
@@ -15,9 +16,10 @@ public class MessageListRenderer implements ListCellRenderer {
 
     private Color selectedColor;
     private Color normalColor;
-    public MessageListRenderer(){
+    public MessageListRenderer() throws IOException, FontFormatException {
         panel = new JPanel();
         label = new JLabel();
+        label.setFont(Utils.createFont("/fonts/CrimewaveBB.ttf").deriveFont(Font.BOLD, 22));
 
         selectedColor = new Color(210, 210, 255);
         normalColor = Color.WHITE;

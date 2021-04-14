@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellEditor;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class MessagePanel extends JPanel implements ProgressDialogListener{
     private JSplitPane lowerPane;
     private  DefaultListModel defaultListModel;
 
-    public MessagePanel(JFrame parent){
+    public MessagePanel(JFrame parent) throws IOException, FontFormatException {
 
         progressDialog = new ProgressDialog(parent, "Messages Downloading...");
         messageServer = new MessageServer();

@@ -1,6 +1,8 @@
 import gui.MainFrame;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 
 public class App {
     public static void main(String[] args) {
@@ -8,7 +10,13 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MainFrame();
+                try {
+                    new MainFrame();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

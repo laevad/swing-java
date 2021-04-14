@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
     private JSplitPane jSplitPane;
     private JTabbedPane tabbedPane;
     private MessagePanel messagePanel;
-    public MainFrame(){
+    public MainFrame() throws IOException, FontFormatException {
         super("Hello World"); // title bar
         setVisible(true); // make it visible
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //to terminate
