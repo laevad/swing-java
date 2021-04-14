@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -24,6 +26,19 @@ public class MessagePanel extends JPanel {
         serverTree.setEditable(true);
 
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+        serverTreeCellEditor.addCellEditorListener(new CellEditorListener() {
+            @Override
+            public void editingStopped(ChangeEvent e) {
+                ServerInfo serverInfo = (ServerInfo) serverTreeCellEditor.getCellEditorValue();
+                System.out.println(serverInfo+": "+serverInfo.getId()+": "+serverInfo.isChecked());
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+
+            }
+        });
 
         serverTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
