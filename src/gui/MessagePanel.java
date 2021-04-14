@@ -5,18 +5,23 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeCellEditor;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
 public class MessagePanel extends JPanel {
     private JTree serverTree;
     private ServerTreeCellRenderer treeCellRenderer;
+    private ServerTreeCellEditor serverTreeCellEditor;
     public MessagePanel(){
         treeCellRenderer = new ServerTreeCellRenderer();
 
 
         serverTree = new JTree(createTree());
+        serverTreeCellEditor = new ServerTreeCellEditor();
         serverTree.setCellRenderer(treeCellRenderer);
+        serverTree.setCellEditor((TreeCellEditor) serverTreeCellEditor);
+        serverTree.setEditable(true);
 
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
