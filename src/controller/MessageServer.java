@@ -16,11 +16,14 @@ public class MessageServer implements Iterable<Message> {
         messages = new TreeMap<Integer, List<Message>>();
 
         List<Message> list = new ArrayList<Message>();
-        list.add(new Message("The cat is missing", "Have you seen Felix anywhere?"));
+        list.add(new Message("See you later?", "Are we still meeting in the pub?"));
+        list.add(new Message("See you later?", "Are we still meeting in the pub?"));
         list.add(new Message("See you later?", "Are we still meeting in the pub?"));
         messages.put(0, list);
 
         list = new ArrayList<Message>();
+        list.add(new Message("How about dinner later?", "Are you doing anything later on?"));
+        list.add(new Message("How about dinner later?", "Are you doing anything later on?"));
         list.add(new Message("How about dinner later?", "Are you doing anything later on?"));
         messages.put(1, list);
     }
@@ -57,7 +60,7 @@ class MessageIterator implements Iterator{
     @Override
     public Object next() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
 
         }

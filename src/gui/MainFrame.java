@@ -4,6 +4,8 @@ import controller.Controller;
 import sun.applet.Main;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -70,12 +72,21 @@ public class MainFrame extends JFrame {
 
         tablePanel.setData(controller.getPeople());
         tablePanel.setPersonTableListener(new PersonTableListener() {
-                                              public void rowDeleted(int row) {
-                                                  controller.removePerson(row);
-                                                  System.out.println(row);
-                                              }
-                                          });
-
+            public void rowDeleted(int row) {
+                controller.removePerson(row);
+                System.out.println(row);
+            }
+        });
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int tabIndex = tabbedPane.getSelectedIndex();
+                System.out.println(tabIndex);
+                if (tabIndex == 1){
+                    messagePanel.refresh();
+                }
+            }
+        });
         // pass the construct and implement some stuff
         toolbar.setToolbarListener(new ToolbarListener() {
             @Override
