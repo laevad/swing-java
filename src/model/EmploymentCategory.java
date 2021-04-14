@@ -2,8 +2,8 @@ package model;
 
 public enum EmploymentCategory {
     employed("employed"),
-    selfEmployed("selfEmployed"),
-    unEmployed("unEmployed"),
+    selfEmployed("self employed"),
+    unEmployed("unemployed"),
     other("other");
     private String text;
     private EmploymentCategory(String text){
