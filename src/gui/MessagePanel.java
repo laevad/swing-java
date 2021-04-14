@@ -23,11 +23,14 @@ public class MessagePanel extends JPanel {
     private JTree serverTree;
     private ServerTreeCellRenderer treeCellRenderer;
     private ServerTreeCellEditor serverTreeCellEditor;
+    private ProgressDialog progressDialog;
     private Set<Integer> selectedServers;
     private MessageServer messageServer;
 
+
     public MessagePanel(){
 
+        progressDialog = new ProgressDialog((Window) getParent());
         messageServer = new MessageServer();
         selectedServers = new TreeSet<Integer>();
         selectedServers.add(0);
@@ -61,6 +64,15 @@ public class MessagePanel extends JPanel {
             }
 
             private void retrieveMessages() {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("showing modal dialog");
+                        progressDialog.setVisible(true);
+                        System.out.println("finish showing dialog");
+                    }
+                });
+
                 SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>(){
                     @Override
                     protected List<Message> doInBackground() throws Exception {
@@ -91,6 +103,7 @@ public class MessagePanel extends JPanel {
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.setVisible(false);
                     }
                 };
                 worker.execute();
