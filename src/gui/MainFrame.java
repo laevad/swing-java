@@ -12,7 +12,6 @@ import java.util.prefs.Preferences;
 
 public class MainFrame extends JFrame {
     // component - private instance variables
-    private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
@@ -48,7 +47,6 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
 
         // create new object
-        textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
         fileChooser = new JFileChooser();

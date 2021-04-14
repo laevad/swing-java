@@ -9,14 +9,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellEditor;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MessagePanel extends JPanel implements ProgressDialogListener{
@@ -27,6 +26,10 @@ public class MessagePanel extends JPanel implements ProgressDialogListener{
     private Set<Integer> selectedServers;
     private MessageServer messageServer;
     private SwingWorker<List<Message>, Integer> worker;
+    private TextPanel textPanel;
+    private JList messageList;
+    private JSplitPane upperPane;
+    private JSplitPane lowerPane;
 
     public MessagePanel(JFrame parent){
 
@@ -129,8 +132,19 @@ public class MessagePanel extends JPanel implements ProgressDialogListener{
         });
 
         setLayout(new BorderLayout());
+        textPanel = new TextPanel();
+        messageList = new JList();
 
-        add(new JScrollPane(serverTree), BorderLayout.CENTER);
+        lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, messageList, textPanel);
+        upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
+
+        textPanel.setMinimumSize(new Dimension(10, 100));
+        messageList.setMinimumSize(new Dimension(10, 100));
+
+        upperPane.setResizeWeight(0.5);
+        lowerPane.setResizeWeight(0.5);
+
+        add(upperPane, BorderLayout.CENTER);
     }
     private DefaultMutableTreeNode createTree() {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
