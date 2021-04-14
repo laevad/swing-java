@@ -28,7 +28,8 @@ public class MainFrame extends JFrame {
         setVisible(true); // make it visible
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //to terminate
         setSize(1280,500); // to set size
-        setMinimumSize(new Dimension(500, 400));
+        centreWindow(this);
+//        setMinimumSize(new Dimension(500, 400));
 
         // Border Layout
         /*
@@ -55,7 +56,7 @@ public class MainFrame extends JFrame {
         tablePanel = new TablePanel();
         prefsDialog = new PrefsDialog(this);
         tabbedPane = new JTabbedPane();
-        messagePanel = new MessagePanel();
+        messagePanel = new MessagePanel(this);
         jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,formPanel, tabbedPane);
         jSplitPane.setOneTouchExpandable(true);
 
@@ -148,6 +149,12 @@ public class MainFrame extends JFrame {
         add(jSplitPane, BorderLayout.CENTER);
     }
 
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+    }
     private void connect() {
         try {
             controller.connect();
