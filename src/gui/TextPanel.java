@@ -8,6 +8,7 @@ public class TextPanel extends JPanel {
 
     public TextPanel(){
         textArea = new JTextArea();
+        textArea.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         setLayout(new BorderLayout());
 
@@ -17,5 +18,9 @@ public class TextPanel extends JPanel {
     //method for append text
     public void appendText(String text){
         textArea.append(text);
+    }
+
+    public void setText(String content) {
+        textArea.setText(content);
     }
 }

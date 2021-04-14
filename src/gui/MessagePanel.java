@@ -4,10 +4,7 @@ import controller.MessageServer;
 import model.Message;
 
 import javax.swing.*;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellEditor;
 import javax.swing.tree.TreeSelectionModel;
@@ -96,6 +93,13 @@ public class MessagePanel extends JPanel implements ProgressDialogListener{
         textPanel = new TextPanel();
         messageList = new JList(defaultListModel);
         messageList.setCellRenderer(new MessageListRenderer());
+        messageList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                Message message = (Message) messageList.getSelectedValue();
+                textPanel.setText(message.getContent());
+            }
+        });
         lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(messageList), textPanel);
         upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
 
@@ -180,6 +184,7 @@ public class MessagePanel extends JPanel implements ProgressDialogListener{
                     for (Message message: retrieveMessages){
                         defaultListModel.addElement(message);
                     }
+                    messageList.setSelectedIndex(0);
 
                     System.out.println("Retrieve "+ retrieveMessages.size()+" messages.");
                 } catch (InterruptedException e) {
